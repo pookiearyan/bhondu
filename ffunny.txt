@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Rasmalai Game 🎮</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', cursive;
+  background: linear-gradient(135deg, #ff758c, #ffb199);
+  color: white;
+  text-align: center;
+}
+
+.screen {
+  display: none;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.active {
+  display: flex;
+}
+
+button {
+  padding: 12px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 15px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.choice {
+  background: rgba(255,255,255,0.2);
+}
+
+#yes {
+  background: red;
+  position: absolute;
+}
+
+#no {
+  background: green;
+}
+
+.level {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 18px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="level" id="level">Level 0</div>
+
+<!-- LEVEL 0 PASSWORD -->
+<div id="l0" class="screen active">
+  <h2>🔐 Enter Password</h2>
+  <p>Hint: sender's birthday 🎂</p>
+  <input type="password" id="pass">
+  <br><br>
+  <button onclick="checkPass()">Start Game</button>
+</div>
+
+<!-- LEVEL 1 -->
+<div id="l1" class="screen">
+  <h2>Who are you? 🤨</h2>
+  <button class="choice" onclick="next(2)">Rasmalai Sherni 🐯</button>
+  <button class="choice" onclick="next(2)">Dr Bhondu 😌</button>
+  <button class="choice" onclick="next(2)">Surajmukhi 🌻</button>
+</div>
+
+<!-- LEVEL 2 -->
+<div id="l2" class="screen">
+  <h2>Why are you here? 👀</h2>
+  <button class="choice" onclick="next(3)">Timepass 😏</button>
+  <button class="choice" onclick="next(3)">Missed me 😌</button>
+  <button class="choice" onclick="next(3)">Accidentally clicked 😭</button>
+</div>
+
+<!-- LEVEL 3 -->
+<div id="l3" class="screen">
+  <h2 id="story"></h2>
+  <button onclick="next(4)">Continue ➡️</button>
+</div>
+
+<!-- LEVEL 4 FINAL -->
+<div id="l4" class="screen">
+  <h2>FINAL BOSS 😈</h2>
+  <p>Will you ever block me?</p>
+  <button id="yes">YES</button>
+  <button id="no" onclick="next(5)">NO</button>
+</div>
+
+<!-- LEVEL 5 END -->
+<div id="l5" class="screen">
+  <h1>🎉 GAME COMPLETED 🎉</h1>
+  <p>
+    Uii maa 😭😂 <br><br>
+    Thanks for playing 💛<br><br>
+    2 saal survive kar liye tune mere saath 😭<br>
+    Respect ++ 📈<br><br>
+    Yaad rakhna…<br>
+    ye bhejne wala tujhe random moments pe yaad karta hai 😌✨
+  </p>
+</div>
+
+<script>
+let password = "25012006";
+
+function checkPass() {
+  let val = document.getElementById("pass").value;
+  if (val === password) {
+    next(1);
+  } else {
+    alert("Wrong password 😤");
+  }
+}
+
+function next(level) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById("l" + level).classList.add("active");
+  document.getElementById("level").innerText = "Level " + level;
+
+  if (level === 3) startStory();
+}
+
+// STORY TEXT
+function startStory() {
+  let text = "From Mysha... to Adhara... to Dhanvantari ji... to Rasmalai Sherni 🐯... 2 years and still not bored of me 😭";
+  let i = 0;
+  let el = document.getElementById("story");
+  el.innerHTML = "";
+
+  function type() {
+    if (i < text.length) {
+      el.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(type, 40);
+    }
+  }
+  type();
+}
+
+// YES BUTTON ESCAPE
+let yes = document.getElementById("yes");
+let tries = 0;
+
+yes.addEventListener("mouseover", () => {
+  if (tries < 6) {
+    yes.style.top = Math.random() * window.innerHeight + "px";
+    yes.style.left = Math.random() * window.innerWidth + "px";
+    tries++;
+  } else {
+    yes.disabled = true;
+    yes.innerText = "Not Possible 😈";
+  }
+});
+
+yes.addEventListener("click", () => {
+  alert("Galat choice 😡");
+});
+</script>
+
+</body>
+</html>
